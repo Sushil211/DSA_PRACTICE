@@ -1,0 +1,65 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define endl "\n"
+#define ll long long int
+
+void bfs(vector<int> A[], int v, int s)
+{
+    queue<int> q;
+    q.push(s);
+    vector<bool> visited(v);
+    visited[s] = true;
+
+    while(!q.empty())
+    {
+        int u = q.front();
+        cout<<u<<" ";
+        q.pop();
+
+        for(int x:A[u])
+        {
+            if(visited[x]==false)
+            {
+                q.push(x);
+                visited[x] = true;
+            }
+        }
+    }
+}
+
+void dfs(vector<int> A[], int v, int s, bool visit[])
+{
+    visit[s] = true;
+    cout<<s<<" ";
+    for(int i=0;i<v;i++)
+    {
+        if(!visit[i])
+            dfs(A,v,i,visit);
+    }
+}
+
+int main()
+ {
+	//code
+	ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    int v=4;
+    vector<int> A[4];
+    A[0].push_back(1);
+    A[0].push_back(2);
+    A[0].push_back(3);
+    A[1].push_back(0);
+    A[1].push_back(3);
+    A[2].push_back(0);
+    A[3].push_back(1);
+    A[3].push_back(0);
+
+    bool visit[4] = {false,false,false,false};
+
+    bfs(A,4,0);
+    cout<<endl;
+    dfs(A,4,1,visit);
+	return 0;
+}
