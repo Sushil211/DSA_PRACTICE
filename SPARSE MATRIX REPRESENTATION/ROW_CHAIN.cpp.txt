@@ -1,0 +1,85 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+struct Node
+{
+    int value;
+    int col;
+    struct Node *next;
+};
+
+// Function to create new node
+void create_new_node(struct Node** start, int x, int c_index )
+{
+    struct Node *temp, *r;
+    temp = *start;
+    if (temp == NULL)
+    {
+        // Create new node dynamically
+        temp = new struct Node;
+        temp->value = x;
+        temp->col = c_index;
+        temp->next = NULL;
+        *start = temp;
+
+    }
+    else
+    {
+        while (temp->next)
+            temp = temp->next;
+
+        // Create new node dynamically
+        r = new struct Node;
+        r->value = x;
+        r->col = c_index;
+        r->next = NULL;
+        temp->next = r;
+
+    }
+}
+
+// This function prints contents of linked list
+// starting from start
+void display(struct Node* start)
+{
+    struct Node *s;
+    s = start;
+
+    while(s)
+    {
+        cout<<"("<<s->col<<","<<s->value<<")"<<" ";
+        s = s->next;
+    }
+    cout<<endl;
+}
+
+int main()
+{
+    int rowDimension, colDimension;
+
+    cout<<"Enter row and column dimensions: ";
+    cin>>rowDimension>>colDimension;
+
+    struct Node *start[rowDimension] = {};
+
+    int A[rowDimension][colDimension]={};
+
+    for(int i=0;i<rowDimension;i++)
+    {
+        for(int j=0;j<colDimension;j++)
+        {
+	    cin>>A[i][j];
+            if(A[i][j]!=0)
+                create_new_node(&start[i],A[i][j],j);
+        }
+    }
+
+    for(int i=0;i<rowDimension;i++)
+    {
+        cout<<"Row("<<i+1<<"): ";
+        display(start[i]);
+        cout<<endl;
+    }
+    return 0;
+}

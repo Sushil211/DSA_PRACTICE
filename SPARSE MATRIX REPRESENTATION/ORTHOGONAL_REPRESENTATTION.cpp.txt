@@ -1,0 +1,93 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+struct Node
+{
+    int value;
+    int row;
+    int col;
+    struct Node *down;
+    struct Node *next;
+};
+
+// Function to create new node
+void create_new_node(struct Node** start, int x, int r_index, int c_index )
+{
+    struct Node *temp, *r;
+    temp = *start;
+    if (temp == NULL)
+    {
+        // Create new node dynamically
+        temp = new struct Node;
+        temp->value = x;
+        temp->row = r_index;
+        temp->col = c_index;
+        temp->next = NULL;
+        temp->down=0;
+        *start = temp;
+
+    }
+    else
+    {
+        while (temp->next)
+            temp = temp->next;
+
+        // Create new node dynamically
+        r = new struct Node;
+        r->value = x;
+        r->row = r_index;
+        r->col = c_index;
+        r->next = NULL;
+        r->down=0;
+        temp->next = r;
+
+    }
+}
+
+// This function prints contents of linked list
+// starting from start
+void display(struct Node* start)
+{
+    struct Node *temp;
+    temp = start;
+
+    //cout<<"row_position: ";
+    while(temp)
+    {
+
+        cout<<"("<<temp->row<<","<<temp->col<<","<<temp->value<<")"<<" ";
+        temp = temp->next;
+    }
+    cout<<endl;
+}
+
+int main()
+{
+    int rowDimension, colDimension,non_zero;
+    cout<<"Enter row and column dimensions: ";
+    cin>>rowDimension>>colDimension;
+    int A[rowDimension][colDimension]={};
+
+    cout<<"Enter number of non-zero terms: ";
+    cin>>non_zero;
+
+	struct Node *start[non_zero]={};
+
+    for(int i=0;i<rowDimension;i++)
+    {
+        for(int j=0;j<colDimension;j++)
+        {
+            cin>>A[i][j];
+            if(A[i][j]!=0)
+            {
+                for(int k=0;k<non_zero;k++)
+                    create_new_node(&start[k],A[i][j],i,j);
+            }
+        }
+    }
+
+    //for(int i=0;i<non_zero;i++)
+        display(start[0]);
+    return 0;
+}

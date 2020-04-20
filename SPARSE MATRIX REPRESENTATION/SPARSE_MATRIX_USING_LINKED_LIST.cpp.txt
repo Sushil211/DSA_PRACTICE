@@ -1,0 +1,111 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+struct Node
+{
+    int value;
+    int row;
+    int col;
+    struct Node *next;
+};
+
+// Function to create new node
+void create_new_node(struct Node** start, int x,
+                     int r_index, int c_index )
+{
+    struct Node *temp, *r;
+    temp = *start;
+    if (temp == NULL)
+    {
+        // Create new node dynamically
+        temp = new struct Node;
+        temp->value = x;
+        temp->row = r_index;
+        temp->col = c_index;
+        temp->next = NULL;
+        *start = temp;
+
+    }
+    else
+    {
+        while (temp->next)
+            temp = temp->next;
+
+        // Create new node dynamically
+        r = new struct Node;
+        r->value = x;
+        r->row = r_index;
+        r->col = c_index;
+        r->next = NULL;
+        temp->next = r;
+
+    }
+}
+
+// This function prints contents of linked list
+// starting from start
+void display(struct Node* start)
+{
+    struct Node *temp, *r, *s;
+    temp = r = s = start;
+
+    cout<<"row_position: ";
+    while(temp)
+    {
+
+        cout<<temp->row<<" ";
+        temp = temp->next;
+    }
+    cout<<endl;
+
+    cout<<"column_postion: ";
+    while(r)
+    {
+        cout<<r->col<<" ";
+        r = r->next;
+    }
+    cout<<endl;
+
+    cout<<"Value: ";
+    while(s)
+    {
+        cout<<s->value<<" ";
+        s = s->next;
+    }
+    cout<<endl;
+}
+
+int main()
+{
+    struct Node *start=0;
+    int rowDimension, colDimension;
+    int r_index,c_index,Value,non_zero;
+    cout<<"Enter row and column dimensions: ";
+    cin>>rowDimension>>colDimension;
+    int A[rowDimension][colDimension]={};
+
+    cout<<"Enter number of non-zero terms: ";
+    cin>>non_zero;
+	
+    //If you want user to input row index, column index and value, then follow the below procedure
+    /*cout<<"Enter the row index, col index and values: "<<endl;
+    for(int i=0;i<non_zero;i++)
+    {
+        cin>>r_index>>c_index>>Value;
+        A[r_index][c_index] = Value;
+    }*/
+
+    for(int i=0;i<rowDimension;i++)
+    {
+        for(int j=0;j<colDimension;j++)
+        {
+	    cout<<A[i][j];
+            if(A[i][j]!=0)
+                create_new_node(&start,A[i][j],i,j);
+        }
+    }
+
+    display(start);
+    return 0;
+}
